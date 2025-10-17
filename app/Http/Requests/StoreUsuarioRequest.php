@@ -18,7 +18,8 @@ class StoreUsuarioRequest extends FormRequest
             'nombre'         => ['required','string','max:50'],
             'correo'         => ['required','email','max:120','unique:usuarios_usuario,correo'],
             'password'       => ['required','string','min:8'],
-            'id_estado'      => ['nullable','integer','exists:catalogo_estados,id'], // por defecto 1
+            'id_estado'      => ['nullable','integer','exists:catalogo_estados,id'], // por defecto 
+             'id_perfil'      => ['required','integer','exists:catalogo_perfil,id'],
         ];
     }
 }
