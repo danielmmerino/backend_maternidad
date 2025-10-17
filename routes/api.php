@@ -1,0 +1,27 @@
+<?php
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\UsuarioController;
+
+/*
+|--------------------------------------------------------------------------
+| API Routes
+|--------------------------------------------------------------------------
+|
+| Aquí defines todas las rutas de tu API.
+| Por defecto, las rutas en este archivo estarán bajo el prefijo /api
+| y usarán el middleware "api" definido en App\Http\Kernel.php.
+|
+| Ejemplo:
+|  POST  http://localhost:8000/api/usuarios
+|
+*/
+
+// Endpoint de prueba opcional
+Route::get('/ping', function () {
+    return response()->json(['message' => 'API funcionando ✅']);
+});
+
+// Crear usuario (POST)
+Route::post('/usuarios', [UsuarioController::class, 'store']);
