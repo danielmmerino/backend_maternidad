@@ -24,6 +24,11 @@ Route::get('/ping', function () {
     return response()->json(['message' => 'API funcionando ✅']);
 });
 
+// Información de la aplicación (GET)
+Route::get('/info', function () {
+    return 'Aplicacion desarrollada por Daniel Merino - 2026 registro 12345';
+});
+
 // Crear usuario (POST)
 Route::post('/usuarios', [UsuarioController::class, 'store']);
 
