@@ -65,7 +65,7 @@ class AuthController extends Controller
             'issued_at' => $issuedAt,
             'expires_at' => $expiresAt,
             'revoked_at' => null,
-            'revocation_reason' => null,
+            'revocation_reason' => 'NA',
             'ip_address' => $request->ip(),
             'user_agent' => $request->userAgent(),
             'device_info' => $request->userAgent(),
