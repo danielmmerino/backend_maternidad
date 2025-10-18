@@ -54,11 +54,14 @@ class AuthController extends Controller
             'jti' => $jwtId,
         ]);
 
+        $refreshToken = Str::random(64);
+        $refreshTokenHash = hash('sha256', $refreshToken);
+
         UsuarioSesion::create([
             'id_usuario' => $usuario->id,
             'jwt_id' => $jwtId,
             'token_hash' => hash('sha256', $token),
-            'refresh_token_hash' => null,
+            'refresh_token_hash' => $refreshTokenHash,
             'issued_at' => $issuedAt,
             'expires_at' => $expiresAt,
             'revoked_at' => null,
@@ -79,6 +82,7 @@ class AuthController extends Controller
                 'correo' => $perfil->correo,
                 'perfil' => $perfil->nombre_perfil,
                 'token' => $token,
+                'refresh_token' => $refreshToken,
                 'expira_en' => $expiresAt->toIso8601String(),
             ],
         ]);
