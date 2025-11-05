@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\AgendaSaludController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UsuarioController;
 
@@ -34,3 +35,6 @@ Route::post('/usuarios', [UsuarioController::class, 'store']);
 
 // Login de usuario (POST)
 Route::post('/login', [AuthController::class, 'login']);
+
+// Crear agenda de salud (POST)
+Route::post('/crear_agenda', [AgendaSaludController::class, 'store']);
