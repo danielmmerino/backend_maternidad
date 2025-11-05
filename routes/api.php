@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AgendaSaludController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UsuarioController;
+use App\Http\Controllers\Api\CatalogoNacionalidadController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,3 +39,6 @@ Route::post('/login', [AuthController::class, 'login']);
 
 // Crear agenda de salud (POST)
 Route::post('/crear_agenda', [AgendaSaludController::class, 'store']);
+
+// Listado de nacionalidades activas (GET)
+Route::get('/catalogos/nacionalidades', [CatalogoNacionalidadController::class, 'index']);
