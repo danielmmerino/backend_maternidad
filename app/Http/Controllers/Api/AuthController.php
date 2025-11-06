@@ -34,7 +34,7 @@ class AuthController extends Controller
             ->where('uu.id', $usuario->id)
             ->where('upu.id_estado', 1)
             ->where('uu.id_estado', 1)
-            ->select('uu.public_id', 'uu.nombre', 'uu.correo', 'cp.nombre_perfil')
+            ->select('uu.public_id', 'uu.nombre', 'uu.correo', 'cp.nombre_perfil', 'cp.public_id_perfil')
             ->first();
 
         if (! $perfil) {
@@ -81,6 +81,7 @@ class AuthController extends Controller
                 'nombre' => $perfil->nombre,
                 'correo' => $perfil->correo,
                 'perfil' => $perfil->nombre_perfil,
+                'public_id_perfil' => $perfil->public_id_perfil,
                 'token' => $token,
                 'refresh_token' => $refreshToken,
                 'expira_en' => $expiresAt->toIso8601String(),
