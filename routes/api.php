@@ -40,5 +40,8 @@ Route::post('/login', [AuthController::class, 'login']);
 // Crear agenda de salud (POST)
 Route::post('/crear_agenda', [AgendaSaludController::class, 'store']);
 
+// Obtener agenda de salud (POST)
+Route::post('/obtener_agenda', [AgendaSaludController::class, 'show']);
+
 // Listado de nacionalidades activas (GET)
 Route::get('/catalogos/nacionalidades', [CatalogoNacionalidadController::class, 'index']);

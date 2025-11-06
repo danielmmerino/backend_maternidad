@@ -8,6 +8,8 @@ use App\Models\Usuario;
 use App\Models\UsuarioAgendaSalud;
 use Carbon\Carbon;
 use Illuminate\Database\QueryException;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
 
 class AgendaSaludController extends Controller
@@ -60,5 +62,53 @@ class AgendaSaludController extends Controller
                 'error' => 'Error de base de datos',
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
+    }
+
+    public function show(Request $request)
+    {
+        $validated = $request->validate([
+            'public_id' => ['required', 'uuid', Rule::exists('usuarios_usuario', 'public_id')],
+        ]);
+
+        $usuario = Usuario::where('public_id', $validated['public_id'])->first();
+
+        if (!$usuario) {
+            return response()->json([
+                'message' => 'No se pudo obtener la agenda',
+                'error' => 'El usuario especificado no existe',
+            ], Response::HTTP_NOT_FOUND);
+        }
+
+        $agenda = UsuarioAgendaSalud::where('id_usuario', $usuario->id)
+            ->latest('id')
+            ->first();
+
+        if (!$agenda) {
+            return response()->json([
+                'message' => 'No se encontraron registros de agenda para el usuario solicitado',
+            ], Response::HTTP_NOT_FOUND);
+        }
+
+        return response()->json([
+            'message' => 'Agenda obtenida correctamente',
+            'data' => [
+                'public_id' => $usuario->public_id,
+                'nombres_completo' => $agenda->nombre_completo,
+                'id_nacionalidad' => $agenda->id_nacionalidad,
+                'rut' => $agenda->rut,
+                'fecha_nacimiento' => optional($agenda->fecha_nacimiento)->toDateString(),
+                'es_originario' => $agenda->es_originario,
+                'descripcion_originario' => $agenda->descripcion_originario,
+                'telefono1' => $agenda->telefono1,
+                'telefono2' => $agenda->telefono2,
+                'correo_electronico' => $agenda->correo_electronico,
+                'ocupacion' => $agenda->ocupacion,
+                'domicilio' => $agenda->domicilio,
+                'escolaridad_basica' => $agenda->escolaridad_basica,
+                'escolaridad_media' => $agenda->escolaridad_media,
+                'escolaridad_superior' => $agenda->escolaridad_superior,
+                'id_estado' => $agenda->id_estado,
+            ],
+        ], Response::HTTP_OK);
     }
 }
