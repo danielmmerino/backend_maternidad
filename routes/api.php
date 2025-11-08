@@ -21,27 +21,29 @@ use App\Http\Controllers\Api\CatalogoNacionalidadController;
 |
 */
 
-// Endpoint de prueba opcional
-Route::get('/ping', function () {
-    return response()->json(['message' => 'API funcionando ✅']);
-});
-
-// Información de la aplicación (GET)
-Route::get('/info', function () {
-    return 'Aplicacion desarrollada por Daniel Merino - 2026 registro 12345';
-});
-
 // Crear usuario (POST)
 Route::post('/usuarios', [UsuarioController::class, 'store']);
 
 // Login de usuario (POST)
 Route::post('/login', [AuthController::class, 'login']);
 
-// Crear agenda de salud (POST)
-Route::post('/crear_agenda', [AgendaSaludController::class, 'store']);
+Route::middleware('auth.jwt')->group(function () {
+    // Endpoint de prueba opcional
+    Route::get('/ping', function () {
+        return response()->json(['message' => 'API funcionando ✅']);
+    });
 
-// Obtener agenda de salud (POST)
-Route::post('/obtener_agenda', [AgendaSaludController::class, 'show']);
+    // Información de la aplicación (GET)
+    Route::get('/info', function () {
+        return 'Aplicacion desarrollada por Daniel Merino - 2026 registro 12345';
+    });
 
-// Listado de nacionalidades activas (GET)
-Route::get('/catalogos/nacionalidades', [CatalogoNacionalidadController::class, 'index']);
+    // Crear agenda de salud (POST)
+    Route::post('/crear_agenda', [AgendaSaludController::class, 'store']);
+
+    // Obtener agenda de salud (POST)
+    Route::post('/obtener_agenda', [AgendaSaludController::class, 'show']);
+
+    // Listado de nacionalidades activas (GET)
+    Route::get('/catalogos/nacionalidades', [CatalogoNacionalidadController::class, 'index']);
+});
