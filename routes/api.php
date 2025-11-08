@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AgendaSaludController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UsuarioController;
+use App\Http\Controllers\Api\PerfilController;
 use App\Http\Controllers\Api\CatalogoNacionalidadController;
 
 /*
@@ -46,4 +47,7 @@ Route::middleware('auth.jwt')->group(function () {
 
     // Listado de nacionalidades activas (GET)
     Route::get('/catalogos/nacionalidades', [CatalogoNacionalidadController::class, 'index']);
+
+    // Validar si un usuario tiene el perfil de doctor (POST)
+    Route::post('/validar/perfil/doctor', [PerfilController::class, 'validarPerfilDoctor']);
 });
