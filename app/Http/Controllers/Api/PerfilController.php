@@ -21,6 +21,7 @@ class PerfilController extends Controller
             ->where('uu.public_id', $data['public_id'])
             ->where('cp.public_id_perfil', $data['public_id_perfil'])
             ->where('upu.id_estado', 1)
+            ->where('cp.id', 2)
             ->exists();
 
         return response()->json([
